@@ -19,12 +19,12 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     let api:ApiSimulator = ApiSimulator()
     var dishes:[Dish] = []
     var dishPosition:SCNVector3 = SCNVector3Make(0, 0, 0)
-    var dishId:Int = 0
-    
+    var dishId:Int = 0    
     @IBOutlet weak var qrLabel: UILabel!
     @IBOutlet weak var dishNameLabel: UILabel!
     @IBOutlet weak var dishPriceLabel: UILabel!
     @IBOutlet weak var swipeGestureImage: UIImageView!
+    @IBOutlet weak var exitImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +33,11 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         let restaurant = api.loadRestaurants(restaurantId: restId)
         dishes = restaurant.dishes
         qrLabel.text = restaurant.name
-        super.viewDidLoad()
         
         // Debug
         //self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
         
+        // Run AR Scene
         self.sceneView.session.run(configuration)
         
         // Add swipe gesture recognizer (left & right)
@@ -47,12 +47,40 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         let right = UISwipeGestureRecognizer(target : self, action : #selector(self.rightSwipe))
         right.direction = .right
         self.view.addGestureRecognizer(right)
-        
-            }
+        // Add exit image tap recognizer
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(exitDishView(tapGestureRecognizer:)))
+        exitImage.isUserInteractionEnabled = true
+        exitImage.addGestureRecognizer(tapGestureRecognizer)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc
+    func exitDishView(tapGestureRecognizer: UITapGestureRecognizer) {
+        // Declare Alert message
+        let dialogMessage = UIAlertController(title: "Confirm", message: "Are you sure you want to close?", preferredStyle: .alert)
+        
+        // Create OK button with action handler
+        let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+            
+            // Don't do this
+            self.dismiss(animated: true, completion: nil)
+        })
+        
+        // Create Cancel button with action handlder
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+            // Do noop
+        }
+        
+        // Add OK and Cancel button to dialog message
+        dialogMessage.addAction(ok)
+        dialogMessage.addAction(cancel)
+        
+        // Present dialog message to user
+        self.present(dialogMessage, animated: true, completion: nil)
     }
     
     /* -- All relative to AR -- */
@@ -108,12 +136,10 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     func addDishToTable() {
         let dish:Dish = dishes[dishId]
         guard let model3D = SCNScene(named: "./" + dishes[dishId].model3dName) else { print("cant find dish"); return }
-    
         model3D.rootNode.enumerateChildNodes {(node, _) in
-            // Show Dish Name & Price
+            // Show Dish - Name & Price
             dishNameLabel.text = dish.name
             dishPriceLabel.text = dish.price.description
-            
             if (node.name == "mainNode") {
                 // Prepare Node
                 node.position = SCNVector3Make(0, 0, 0)
@@ -151,7 +177,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func showSwipeGestureImage() {
-        UIView.animate(withDuration: 2, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
+        UIView.animate(withDuration: 1, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
             self.swipeGestureImage.alpha = 1
         }, completion: {
             (Bool) -> Void in
@@ -160,24 +186,22 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func moveSwipeGestureImage(value:Int) {
-        
         switch value {
         case (1), (3):
-            UIView.animate(withDuration: 1, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
-                self.swipeGestureImage.frame.origin.x -= 100
+            UIView.animate(withDuration: 0.5, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
+                self.swipeGestureImage.frame.origin.x -= 30
             }, completion: { (Bool) -> Void in self.moveSwipeGestureImage(value: value+1) })
             break
         case 2:
-            UIView.animate(withDuration: 2, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
-                self.swipeGestureImage.frame.origin.x += 200
+            UIView.animate(withDuration: 1, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
+                self.swipeGestureImage.frame.origin.x += 60
             }, completion: { (Bool) -> Void in self.moveSwipeGestureImage(value: value+1) })
             break
         default:
-            UIView.animate(withDuration: 2, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
+            UIView.animate(withDuration: 1, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
                 self.swipeGestureImage.alpha = 0
             }, completion: {
                 (Bool) -> Void in })
         }
     }
-
 }
