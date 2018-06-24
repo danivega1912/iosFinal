@@ -25,9 +25,50 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var dishPriceLabel: UILabel!
     @IBOutlet weak var swipeGestureImage: UIImageView!
     @IBOutlet weak var exitImage: UIImageView!
+    @IBOutlet weak var labelBackgroundView: UIView!
+    @IBOutlet weak var callWaitressImage: UIImageView!
+    @IBOutlet weak var viewOrderImage: UIImageView!
+    @IBOutlet weak var planeStatusView: UIView!
+    @IBOutlet weak var planeStatusLabel: UILabel!
+    
+    
+    enum ARDishSessionState: String, CustomStringConvertible {
+        case initialized = "initialized", ready = "ready", temporarilyUnavailable = "temporarily unavailable", failed = "failed"
+        
+        var description: String {
+            switch self {
+            case .initialized:
+                return "👀 Buscando planos para mostrar el plato..."
+            case .ready:
+                return "🍜 Tap en cualquier plano para mostrar!"
+            case .temporarilyUnavailable:
+                return "😱 Ajustanto niveles!"
+            case .failed:
+                return "⛔️ Error detectando planos. Reinicie la App."
+            }
+        }
+    }
+    
+    var currentDishStatus = ARDishSessionState.initialized {
+        didSet {
+            DispatchQueue.main.async { self.planeStatusLabel.text = self.currentDishStatus.description }
+            if currentDishStatus == .failed {
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set view details
+        labelBackgroundView.layer.cornerRadius = 10
+        labelBackgroundView.layer.backgroundColor = UIColor.lightGray.cgColor
+        labelBackgroundView.alpha = 0.6
+        dishNameLabel.text = " "
+        dishPriceLabel.text = " "
+        planeStatusView.layer.cornerRadius = 10
+        currentDishStatus = .initialized
+        
         
         // Get Restaurant Information
         let restaurant = api.loadRestaurants(restaurantId: restId)
@@ -35,9 +76,11 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         qrLabel.text = restaurant.name
         
         // Debug
+        self.sceneView.delegate = self
         //self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
         
         // Run AR Scene
+        configuration.planeDetection = .horizontal
         self.sceneView.session.run(configuration)
         
         // Add swipe gesture recognizer (left & right)
@@ -47,10 +90,28 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         let right = UISwipeGestureRecognizer(target : self, action : #selector(self.rightSwipe))
         right.direction = .right
         self.view.addGestureRecognizer(right)
+        
+        // Add double tap on scene to include dish on list
+        let addDishGesture = UITapGestureRecognizer(target: self, action: #selector(addDish(tapGestureRecognizer:)))
+        sceneView.isUserInteractionEnabled = true
+        addDishGesture.numberOfTapsRequired = 2
+        sceneView.addGestureRecognizer(addDishGesture)
+        
         // Add exit image tap recognizer
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(exitDishView(tapGestureRecognizer:)))
+        let exitTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(exitDishView(tapGestureRecognizer:)))
         exitImage.isUserInteractionEnabled = true
-        exitImage.addGestureRecognizer(tapGestureRecognizer)
+        exitImage.addGestureRecognizer(exitTapGestureRecognizer)
+        
+        // Add Call Waitress Tap recognizer
+        let waitressTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(callWaitress(tapGestureRecognizer:)))
+        callWaitressImage.isUserInteractionEnabled = true
+        callWaitressImage.addGestureRecognizer(waitressTapGestureRecognizer)
+        
+        // Add View Order Image tap recognizer
+        let viewOrderTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewOrder(tapGestureRecognizer:)))
+        viewOrderImage.isUserInteractionEnabled = true
+        viewOrderImage.addGestureRecognizer(viewOrderTapGestureRecognizer)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,9 +120,26 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @objc
+    func addDish(tapGestureRecognizer: UITapGestureRecognizer) {
+        print("add dish")
+    }
+    
+    @objc
+    func callWaitress(tapGestureRecognizer: UITapGestureRecognizer) {
+        // Declare Alert message
+        print("call Waitress")
+    }
+    
+    @objc
+    func viewOrder(tapGestureRecognizer: UITapGestureRecognizer) {
+        // Declare Alert message
+        print("view order")
+    }
+    
+    @objc
     func exitDishView(tapGestureRecognizer: UITapGestureRecognizer) {
         // Declare Alert message
-        let dialogMessage = UIAlertController(title: "Confirm", message: "Are you sure you want to close?", preferredStyle: .alert)
+        let dialogMessage = UIAlertController(title: "Confirmar", message: "Seguro desea salir?", preferredStyle: .alert)
         
         // Create OK button with action handler
         let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
@@ -71,7 +149,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         })
         
         // Create Cancel button with action handlder
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel) { (action) -> Void in
             // Do noop
         }
         
@@ -87,14 +165,13 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Create a session configuration
-        //let configuration = ARWorldTrackingConfiguration()
-        
-        // Run the view's session
-        //sceneView.session.run(configuration)
-        
-        
-
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        // If anchor is type Horizontal Plane => change current dish status
+        if anchor is ARPlaneAnchor {
+            currentDishStatus = .ready
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -115,9 +192,10 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
     }
     
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //only for the fish dish
-        if !dishOn {
+        if !dishOn && currentDishStatus == .ready  {
             guard let touch = touches.first else { return }
             let result = sceneView.hitTest(touch.location(in: sceneView), types: [ARHitTestResult.ResultType.estimatedHorizontalPlane])
             guard let hitResult = result.last else { return }
@@ -128,6 +206,8 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
             self.addDishToTable()
             // Dish is already placed in scene
             dishOn = true
+            // Hide Plane Status Indicator
+            hidePlaneStatusUIView()
             // Show Swipe Gesture Image
             showSwipeGestureImage()
         }
@@ -139,7 +219,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         model3D.rootNode.enumerateChildNodes {(node, _) in
             // Show Dish - Name & Price
             dishNameLabel.text = dish.name
-            dishPriceLabel.text = dish.price.description
+            dishPriceLabel.text = "$ " + dish.price.description
             if (node.name == "mainNode") {
                 // Prepare Node
                 node.position = SCNVector3Make(0, 0, 0)
@@ -148,8 +228,12 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
                 node.position = dishPosition
                 // Set Scale
                 node.scale = SCNVector3Make(dish.model3dScaleX, dish.model3dScaleY, dish.model3dScaleZ)
+                // Set Start Opacity
+                node.opacity = 0
                 // Put Dish on Scene
                 sceneView.scene.rootNode.addChildNode(node)
+                // Fade In
+                node.runAction(SCNAction.fadeIn(duration: 1))
             }
         }
     }
@@ -158,7 +242,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     func leftSwipe(){
         sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
             if node.name == "mainNode" {
-                node.removeFromParentNode()
+                node.runAction(SCNAction.fadeOut(duration: 1), completionHandler: { node.removeFromParentNode() })
             }
         }
         dishId = dishId < dishes.count-1 ? dishId + 1 : dishId
@@ -169,7 +253,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     func rightSwipe(){
         sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
             if node.name == "mainNode" {
-                node.removeFromParentNode()
+                node.runAction(SCNAction.fadeOut(duration: 1), completionHandler: { node.removeFromParentNode() })
             }
         }
         dishId = dishId > 0 ? dishId - 1 : 0
@@ -203,5 +287,14 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
             }, completion: {
                 (Bool) -> Void in })
         }
+    }
+    
+    func hidePlaneStatusUIView() {
+        UIView.animate(withDuration: 1, delay: 0, options: .showHideTransitionViews, animations: { () -> Void in
+            self.planeStatusView.alpha = 0
+        }, completion: {
+            (Bool) -> Void in
+            
+        })
     }
 }
