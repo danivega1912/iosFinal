@@ -38,6 +38,7 @@ class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         
         //test
         self.qrText = "1"
+        
         showDishView()
         
         //self.scanCode()

@@ -10,16 +10,9 @@ import UIKit
 import ARKit
 
 
-class DishViewController: UIViewController, ARSCNViewDelegate {
+class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
 
-    var restId:Int = 0
     @IBOutlet weak var sceneView: ARSCNView!
-    let configuration = ARWorldTrackingConfiguration()
-    var dishOn:Bool = false
-    let api:ApiSimulator = ApiSimulator()
-    var dishes:[Dish] = []
-    var dishPosition:SCNVector3 = SCNVector3Make(0, 0, 0)
-    var dishId:Int = 0    
     @IBOutlet weak var qrLabel: UILabel!
     @IBOutlet weak var dishNameLabel: UILabel!
     @IBOutlet weak var dishPriceLabel: UILabel!
@@ -31,6 +24,14 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var planeStatusView: UIView!
     @IBOutlet weak var planeStatusLabel: UILabel!
     
+    var restId:Int              = 0
+    let configuration           = ARWorldTrackingConfiguration()
+    var dishOn:Bool             = false
+    let api:ApiSimulator        = ApiSimulator()
+    var dishes:[Dish]           = []
+    var dishPosition:SCNVector3 = SCNVector3Make(0, 0, 0)
+    var dishId:Int              = 0
+    var selectedDishes:[Int]    = []
     
     enum ARDishSessionState: String, CustomStringConvertible {
         case initialized = "initialized", ready = "ready", temporarilyUnavailable = "temporarily unavailable", failed = "failed"
@@ -63,12 +64,12 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         // Set view details
         labelBackgroundView.layer.cornerRadius = 10
         labelBackgroundView.layer.backgroundColor = UIColor.lightGray.cgColor
-        labelBackgroundView.alpha = 0.6
+        labelBackgroundView.alpha = 0.8
+        
         dishNameLabel.text = " "
         dishPriceLabel.text = " "
         planeStatusView.layer.cornerRadius = 10
         currentDishStatus = .initialized
-        
         
         // Get Restaurant Information
         let restaurant = api.loadRestaurants(restaurantId: restId)
@@ -92,10 +93,10 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         self.view.addGestureRecognizer(right)
         
         // Add double tap on scene to include dish on list
-        let addDishGesture = UITapGestureRecognizer(target: self, action: #selector(addDish(tapGestureRecognizer:)))
+        let viewDishGesture = UITapGestureRecognizer(target: self, action: #selector(viewDish(tapGestureRecognizer:)))
         sceneView.isUserInteractionEnabled = true
-        addDishGesture.numberOfTapsRequired = 2
-        sceneView.addGestureRecognizer(addDishGesture)
+        viewDishGesture.numberOfTapsRequired = 2
+        sceneView.addGestureRecognizer(viewDishGesture)
         
         // Add exit image tap recognizer
         let exitTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(exitDishView(tapGestureRecognizer:)))
@@ -118,10 +119,17 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "detailSegue") {
+            let vc = segue.destination as! dishDetailViewController
+            vc.dishId = dishId
+        }
+    }
     
     @objc
-    func addDish(tapGestureRecognizer: UITapGestureRecognizer) {
-        print("add dish")
+    func viewDish(tapGestureRecognizer: UITapGestureRecognizer) {
+        self.performSegue(withIdentifier: "detailSegue", sender: nil)
     }
     
     @objc
@@ -134,6 +142,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     func viewOrder(tapGestureRecognizer: UITapGestureRecognizer) {
         // Declare Alert message
         print("view order")
+        
     }
     
     @objc
@@ -157,7 +166,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
         dialogMessage.addAction(ok)
         dialogMessage.addAction(cancel)
         
-        // Present dialog message to user
+        // Present dialog message to userself.prepare
         self.present(dialogMessage, animated: true, completion: nil)
     }
     
@@ -186,10 +195,12 @@ class DishViewController: UIViewController, ARSCNViewDelegate {
     
     func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
+        print("session interrupted")
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
+        print("vuelvo")
     }
     
     

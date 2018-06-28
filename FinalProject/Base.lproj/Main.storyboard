@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -77,10 +78,10 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4iu-qC-jmr">
-                                <rect key="frame" x="10" y="90.5" width="355" height="70"/>
+                                <rect key="frame" x="10" y="90.5" width="355" height="70.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RO5-NZ-WSR">
-                                        <rect key="frame" x="20" y="16" width="245" height="17"/>
+                                        <rect key="frame" x="20" y="16" width="245" height="17.5"/>
                                         <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -92,7 +93,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFc-s9-mTh">
-                                        <rect key="frame" x="20" y="41.5" width="245" height="17.5"/>
+                                        <rect key="frame" x="20" y="42" width="245" height="17.5"/>
                                         <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -111,7 +112,7 @@
                                 </constraints>
                             </view>
                             <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eE-6f-ZLI">
-                                <rect key="frame" x="40" y="415" width="295" height="40"/>
+                                <rect key="frame" x="40" y="415.5" width="295" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="naO-tv-UZx">
                                         <rect key="frame" x="20" y="10" width="255" height="14"/>
@@ -129,7 +130,7 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="callWaitressII" translatesAutoresizingMaskIntoConstraints="NO" id="lb8-qH-Kw4">
-                                <rect key="frame" x="321" y="180.5" width="40" height="40"/>
+                                <rect key="frame" x="321" y="181" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="hxt-I4-GeD"/>
                                     <constraint firstAttribute="width" constant="40" id="tKl-Nj-WRt"/>
@@ -174,11 +175,83 @@
                         <outlet property="sceneView" destination="zu4-pC-f9X" id="xhD-Ow-waZ"/>
                         <outlet property="swipeGestureImage" destination="AeQ-yQ-2Tp" id="ysd-ws-3TK"/>
                         <outlet property="viewOrderImage" destination="4yG-RH-pff" id="U7C-r0-Twy"/>
+                        <segue destination="lnW-TO-vnG" kind="presentation" identifier="detailSegue" id="PZW-UM-mgV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dsK-ji-nrx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2749.5999999999999" y="-564.46776611694156"/>
+        </scene>
+        <!--Dish Detail View Controller-->
+        <scene sceneID="vUx-GH-mNk">
+            <objects>
+                <viewController storyboardIdentifier="dishDetailStoryBoard" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="lnW-TO-vnG" customClass="dishDetailViewController" customModule="FinalProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jO5-pf-4sL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPP-wR-m8m">
+                                <rect key="frame" x="15" y="481" width="345" height="166"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUi-0R-y4N">
+                                        <rect key="frame" x="15" y="10" width="315" height="69"/>
+                                        <string key="text">Sencillo bizcocho de chocolate bañado en una deliciosa cobertura de crema de chocolate... chocolate más chocolate, acierto seguro...</string>
+                                        <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qhU-ud-jMo">
+                                        <rect key="frame" x="15" y="126.5" width="108" height="30"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                        <state key="normal" title="   No, Gracias!   ">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelAction:" destination="lnW-TO-vnG" eventType="touchUpInside" id="Yo2-mB-UoQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uZM-9W-gf8">
+                                        <rect key="frame" x="164" y="126" width="155" height="30"/>
+                                        <state key="normal" title="   Agregar a la orden!   ">
+                                            <color key="titleColor" red="0.1785340695" green="0.42046355569999999" blue="0.86946486369999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addDishToOrder:" destination="lnW-TO-vnG" eventType="touchUpInside" id="o8k-3A-Ep7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="166" id="HHY-RD-z87"/>
+                                    <constraint firstAttribute="trailing" secondItem="rUi-0R-y4N" secondAttribute="trailing" constant="15" id="T6a-qg-BeZ"/>
+                                    <constraint firstItem="qhU-ud-jMo" firstAttribute="centerX" secondItem="sPP-wR-m8m" secondAttribute="centerX" multiplier="0.4" id="b48-iZ-31N"/>
+                                    <constraint firstAttribute="bottom" secondItem="uZM-9W-gf8" secondAttribute="bottom" constant="10" id="fBn-wh-MMs"/>
+                                    <constraint firstItem="rUi-0R-y4N" firstAttribute="top" secondItem="sPP-wR-m8m" secondAttribute="top" constant="10" id="fRO-nr-uWB"/>
+                                    <constraint firstItem="qhU-ud-jMo" firstAttribute="centerY" secondItem="uZM-9W-gf8" secondAttribute="centerY" id="jNN-ce-5My"/>
+                                    <constraint firstItem="uZM-9W-gf8" firstAttribute="centerX" secondItem="sPP-wR-m8m" secondAttribute="centerX" multiplier="1.4" id="x0k-K4-01e"/>
+                                    <constraint firstItem="rUi-0R-y4N" firstAttribute="leading" secondItem="sPP-wR-m8m" secondAttribute="leading" constant="15" id="zCd-Yz-bXO"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="0.10191031678082192" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="sPP-wR-m8m" firstAttribute="leading" secondItem="N5G-NI-Iui" secondAttribute="leading" constant="15" id="Hk4-2r-xF1"/>
+                            <constraint firstItem="N5G-NI-Iui" firstAttribute="bottom" secondItem="sPP-wR-m8m" secondAttribute="bottom" constant="20" id="LDM-Ej-M9w"/>
+                            <constraint firstItem="N5G-NI-Iui" firstAttribute="trailing" secondItem="sPP-wR-m8m" secondAttribute="trailing" constant="15" id="avN-md-xbs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="N5G-NI-Iui"/>
+                    </view>
+                    <connections>
+                        <outlet property="addDishButton" destination="uZM-9W-gf8" id="BvA-hp-fmA"/>
+                        <outlet property="cancelButton" destination="qhU-ud-jMo" id="HDT-to-G0y"/>
+                        <outlet property="dishDetailLabel" destination="rUi-0R-y4N" id="buK-gt-39x"/>
+                        <outlet property="dishDetailView" destination="sPP-wR-m8m" id="UFF-EO-lqi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2ks-8p-IcW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3684" y="-564.46776611694156"/>
         </scene>
     </scenes>
     <resources>

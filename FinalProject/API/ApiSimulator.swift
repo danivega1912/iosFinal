@@ -36,7 +36,29 @@ class ApiSimulator {
         let dish4:Dish = Dish.init(name: "Banana", model3dName: "Banana.dae", price: 15.50, model3dRotationX: 1, model3dRotationY: 0, model3dRotationZ: 0, model3dRotationRad: 0, model3dScaleX: 0.015, model3dScaleY: 0.015, model3dScaleZ: 0.015)
         dishes.append(dish4)
         
-
     }
     
+    func getDishDetail(dishId:Int) -> String {
+        var dishDetail:String = ""
+        
+        switch dishId {
+        case 0:
+            dishDetail = "Sencillo bizcocho de chocolate bañado en una deliciosa cobertura de crema de chocolate... chocolate más chocolate, acierto seguro..."
+            break
+        case 1:
+            dishDetail = "Detail 1"
+            break
+        case 2:
+            dishDetail = "Detail 2"
+            break
+        case 3:
+            dishDetail = "Detail 3"
+            break
+        default:
+            //oopss!
+            dishDetail = "Disculpas!, no pudimos encontrar una descripcion para este plato."
+        }
+        
+        return dishDetail
+    }
 }

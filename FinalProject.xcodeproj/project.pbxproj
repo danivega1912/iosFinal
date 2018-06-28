@@ -10,6 +10,7 @@
 		32EB2C6AD7C2C047B4B2FEA3 /* Pods_FinalProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 489232BC99A2787339EF8268 /* Pods_FinalProject.framework */; };
 		6529357120DB38D9001FBA35 /* Banana.dae in Resources */ = {isa = PBXBuildFile; fileRef = 6529357020DB38D9001FBA35 /* Banana.dae */; };
 		6529357320DB38E6001FBA35 /* Banana_TEXTURES in Resources */ = {isa = PBXBuildFile; fileRef = 6529357220DB38E6001FBA35 /* Banana_TEXTURES */; };
+		654E87FC20E31D4800E20E11 /* dishDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654E87FB20E31D4800E20E11 /* dishDetailViewController.swift */; };
 		659E3DFD20DB3765006DF107 /* Mug.dae in Resources */ = {isa = PBXBuildFile; fileRef = 659E3DFC20DB3765006DF107 /* Mug.dae */; };
 		659F92B520D3429B00D248A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659F92B420D3429B00D248A0 /* AppDelegate.swift */; };
 		659F92BA20D3429B00D248A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659F92B820D3429B00D248A0 /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		5ACC425DA25E8657F4E6F7C9 /* Pods-FinalProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.release.xcconfig"; sourceTree = "<group>"; };
 		6529357020DB38D9001FBA35 /* Banana.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Banana.dae; sourceTree = "<group>"; };
 		6529357220DB38E6001FBA35 /* Banana_TEXTURES */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Banana_TEXTURES; sourceTree = "<group>"; };
+		654E87FB20E31D4800E20E11 /* dishDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dishDetailViewController.swift; sourceTree = "<group>"; };
 		659E3DFC20DB3765006DF107 /* Mug.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Mug.dae; sourceTree = "<group>"; };
 		659F92B120D3429B00D248A0 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659F92B420D3429B00D248A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				659F92C620D3449800D248A0 /* MainViewController.swift */,
 				659F92C920D3468700D248A0 /* DishViewController.swift */,
+				654E87FB20E31D4800E20E11 /* dishDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				65F4D94F20D9E2D0008F5422 /* Restaurant.swift in Sources */,
 				65F4D95120D9E358008F5422 /* Dish.swift in Sources */,
 				659F92B520D3429B00D248A0 /* AppDelegate.swift in Sources */,
+				654E87FC20E31D4800E20E11 /* dishDetailViewController.swift in Sources */,
 				659F92C720D3449800D248A0 /* MainViewController.swift in Sources */,
 				659F92CA20D3468700D248A0 /* DishViewController.swift in Sources */,
 				65F4D95320D9E3E8008F5422 /* ApiSimulator.swift in Sources */,
