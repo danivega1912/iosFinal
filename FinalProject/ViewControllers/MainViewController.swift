@@ -12,6 +12,7 @@ import QRCodeReader
 
 class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
 
+    
     var qrText:String = ""
     
     lazy var readerVC: QRCodeReaderViewController = {
@@ -26,7 +27,6 @@ class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
 
         // Do any additional setup after loading the view.
         
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,28 +34,34 @@ class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func scanQrCode(_ sender: Any) {
+        readerVC.delegate = self
+        
+        // Or by using the closure pattern
+        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
+            //self.showDishView()
+        }
+        
+        // Presents the readerVC as modal form sheet
+        readerVC.modalPresentationStyle = .formSheet
+        present(readerVC, animated: true, completion: nil)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        
-        //test
-        self.qrText = "1"
-        
-        showDishView()
-        
-        //self.scanCode()
+        if (self.qrText != "") {
+            self.showDishView()
+        }
     }
     
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
+        self.qrText = result.value
         dismiss(animated: true, completion: nil)
     }
     
     func reader(_ reader: QRCodeReaderViewController, didSwitchCamera newCaptureDevice: AVCaptureDeviceInput) {
+        // not interesting
         
-        /*
-         if (let cameraName? = newCaptureDevice.device.localizedName) {
-         print("Switching capturing to: \(cameraName)")
-         }
-         */
     }
     
     func readerDidCancel(_ reader: QRCodeReaderViewController) {
@@ -65,29 +71,17 @@ class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         exit(0)
     }
     
-    func scanCode() {
-        // Retrieve the QRCode content
-        // By using the delegate pattern
-        readerVC.delegate = self
-        
-        // Or by using the closure pattern
-        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
-            self.qrText = (result?.value)!
-            self.showDishView()
-        }
-
-        // Presents the readerVC as modal form sheet
-        readerVC.modalPresentationStyle = .formSheet
-        present(readerVC, animated: true, completion: nil)
-    }
-    
     func showDishView() {
         let dishVC:DishViewController = self.storyboard!.instantiateViewController(withIdentifier: "DishStoryboard") as! DishViewController
-        //dishVC.qrText = self.qrText
-        print("pushing")
+        
+        // Hardcoded for test.
         dishVC.restId = 1
-        //navigationController?.pushViewController(dishVC, animated: true)
-        show(dishVC, sender: self)
+        
+        self.qrText = ""
+        
+        // Show
+        self.show(dishVC, sender: self)
+        
     }
 
 }

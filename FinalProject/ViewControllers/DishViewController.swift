@@ -62,26 +62,22 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
         super.viewDidLoad()
         
         // Set view details
-        labelBackgroundView.layer.cornerRadius = 10
-        labelBackgroundView.layer.backgroundColor = UIColor.lightGray.cgColor
-        labelBackgroundView.alpha = 0.8
-        
-        dishNameLabel.text = " "
-        dishPriceLabel.text = " "
-        planeStatusView.layer.cornerRadius = 10
-        currentDishStatus = .initialized
+        labelBackgroundView.layer.cornerRadius      = 10
+        labelBackgroundView.layer.backgroundColor   = UIColor.lightGray.cgColor
+        labelBackgroundView.alpha                   = 0.8
+        planeStatusView.layer.cornerRadius          = 10
+        currentDishStatus                           = .initialized
+        dishNameLabel.text                          = " "
+        dishPriceLabel.text                         = " "
         
         // Get Restaurant Information
-        let restaurant = api.loadRestaurants(restaurantId: restId)
-        dishes = restaurant.dishes
-        qrLabel.text = restaurant.name
-        
-        // Debug
-        self.sceneView.delegate = self
-        //self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
-        
+        let restaurant  = api.loadRestaurants(restaurantId: restId)
+        dishes          = restaurant.dishes
+        qrLabel.text    = restaurant.name
+
         // Run AR Scene
-        configuration.planeDetection = .horizontal
+        self.sceneView.delegate         = self
+        configuration.planeDetection    = .horizontal
         self.sceneView.session.run(configuration)
         
         // Add swipe gesture recognizer (left & right)
@@ -142,7 +138,6 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
     func viewOrder(tapGestureRecognizer: UITapGestureRecognizer) {
         // Declare Alert message
         print("view order")
-        
     }
     
     @objc
@@ -152,8 +147,6 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
         
         // Create OK button with action handler
         let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-            
-            // Don't do this
             self.dismiss(animated: true, completion: nil)
         })
         
@@ -195,14 +188,11 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
     
     func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        print("session interrupted")
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-        print("vuelvo")
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //only for the fish dish
