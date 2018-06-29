@@ -12,8 +12,10 @@ import QRCodeReader
 
 class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
 
+    @IBOutlet var mainView: UIView!
     
     var qrText:String = ""
+    let gradient = CAGradientLayer()
     
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
@@ -26,6 +28,10 @@ class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor.white.cgColor, UIColor.black.cgColor]
+        
+        view.layer.insertSublayer(gradient, at: 0)
         
     }
 
@@ -68,7 +74,6 @@ class MainViewController: UIViewController, QRCodeReaderViewControllerDelegate {
         reader.stopScanning()
         
         dismiss(animated: true, completion: nil)
-        exit(0)
     }
     
     func showDishView() {

@@ -8,19 +8,16 @@
 
 import UIKit
 import ARKit
+import SpriteKit
 
 
 class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var qrLabel: UILabel!
-    @IBOutlet weak var dishNameLabel: UILabel!
-    @IBOutlet weak var dishPriceLabel: UILabel!
     @IBOutlet weak var swipeGestureImage: UIImageView!
     @IBOutlet weak var exitImage: UIImageView!
-    @IBOutlet weak var labelBackgroundView: UIView!
     @IBOutlet weak var callWaitressImage: UIImageView!
-    @IBOutlet weak var viewOrderImage: UIImageView!
     @IBOutlet weak var planeStatusView: UIView!
     @IBOutlet weak var planeStatusLabel: UILabel!
     
@@ -62,13 +59,8 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
         super.viewDidLoad()
         
         // Set view details
-        labelBackgroundView.layer.cornerRadius      = 10
-        labelBackgroundView.layer.backgroundColor   = UIColor.lightGray.cgColor
-        labelBackgroundView.alpha                   = 0.8
         planeStatusView.layer.cornerRadius          = 10
         currentDishStatus                           = .initialized
-        dishNameLabel.text                          = " "
-        dishPriceLabel.text                         = " "
         
         // Get Restaurant Information
         let restaurant  = api.loadRestaurants(restaurantId: restId)
@@ -79,7 +71,7 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
         self.sceneView.delegate         = self
         configuration.planeDetection    = .horizontal
         self.sceneView.session.run(configuration)
-        
+    
         // Add swipe gesture recognizer (left & right)
         let left = UISwipeGestureRecognizer(target : self, action : #selector(self.leftSwipe))
         left.direction = .left
@@ -103,12 +95,6 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
         let waitressTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(callWaitress(tapGestureRecognizer:)))
         callWaitressImage.isUserInteractionEnabled = true
         callWaitressImage.addGestureRecognizer(waitressTapGestureRecognizer)
-        
-        // Add View Order Image tap recognizer
-        let viewOrderTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewOrder(tapGestureRecognizer:)))
-        viewOrderImage.isUserInteractionEnabled = true
-        viewOrderImage.addGestureRecognizer(viewOrderTapGestureRecognizer)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -219,8 +205,6 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
         guard let model3D = SCNScene(named: "./" + dishes[dishId].model3dName) else { print("cant find dish"); return }
         model3D.rootNode.enumerateChildNodes {(node, _) in
             // Show Dish - Name & Price
-            dishNameLabel.text = dish.name
-            dishPriceLabel.text = "$ " + dish.price.description
             if (node.name == "mainNode") {
                 // Prepare Node
                 node.position = SCNVector3Make(0, 0, 0)
@@ -235,8 +219,46 @@ class DishViewController: UIViewController, ARSCNViewDelegate, UIPopoverPresenta
                 sceneView.scene.rootNode.addChildNode(node)
                 // Fade In
                 node.runAction(SCNAction.fadeIn(duration: 1))
+                
+                
+                
+            }
+            
+            
+        }
+        
+        // Delete Old Nodes
+        sceneView.scene.rootNode.enumerateChildNodes {(node, _) in
+            if (node.name == "nameNode" || node.name == "priceNode") {
+                node.removeFromParentNode()
             }
         }
+        
+        // Add floating text
+        let dishName3d             = SCNText(string: dish.name, extrusionDepth: 1)
+        dishName3d.font            = UIFont.init(name: "Copperplate", size: 6)
+        let dishPrice3d            = SCNText(string: "$ " + dish.price.description, extrusionDepth: 1)
+        dishPrice3d.font           = UIFont.init(name: "Copperplate", size: 6)
+        let material               = SCNMaterial()
+        material.diffuse.contents  = UIColor.blue
+        dishName3d.materials       = [ material ]
+        dishPrice3d.materials      = [ material ]
+        // Add Name
+        let nameNode        = SCNNode()
+        nameNode.name       = "nameNode"
+        var stringLength    = Float(dish.name.lengthOfBytes(using: String.Encoding.utf8))
+        stringLength        = stringLength / 100
+        nameNode.position   = SCNVector3Make(dishPosition.x - stringLength, dishPosition.y + 0.06, dishPosition.z - 0.2)
+        nameNode.scale      = SCNVector3Make(0.005, 0.005, 0.005)
+        nameNode.geometry   = dishName3d
+        sceneView.scene.rootNode.addChildNode(nameNode)
+        // Add Price
+        let priceNode       = SCNNode()
+        priceNode.name      = "priceNode"
+        priceNode.position  = SCNVector3Make(dishPosition.x - 0.07, dishPosition.y + 0.03, dishPosition.z - 0.2)
+        priceNode.scale     = SCNVector3Make(0.005, 0.005, 0.005)
+        priceNode.geometry  = dishPrice3d
+        sceneView.scene.rootNode.addChildNode(priceNode)
     }
     
     @objc

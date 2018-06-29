@@ -21,7 +21,7 @@ class ApiSimulator {
     }
     
     func loadDishes() {
-        let dish0:Dish = Dish.init(name: "Chocolate Cake 0", model3dName: "Cake.dae", price: 125.00, model3dRotationX: 1, model3dRotationY: 0, model3dRotationZ: 0, model3dRotationRad: -1.6, model3dScaleX: 0.000013, model3dScaleY: 0.000013, model3dScaleZ: 0.000013)
+        let dish0:Dish = Dish.init(name: "Torta de Chocolate", model3dName: "Cake.dae", price: 125.00, model3dRotationX: 1, model3dRotationY: 0, model3dRotationZ: 0, model3dRotationRad: -1.6, model3dScaleX: 0.000013, model3dScaleY: 0.000013, model3dScaleZ: 0.000013)
         dishes.append(dish0)
         
         let dish1:Dish = Dish.init(name: "Chocolate Cake 1", model3dName: "Cake.dae", price: 126.00, model3dRotationX: 1, model3dRotationY: 0, model3dRotationZ: 0, model3dRotationRad: -1.6, model3dScaleX: 0.000013, model3dScaleY: 0.000013, model3dScaleZ: 0.000013)
