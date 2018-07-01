@@ -18,12 +18,16 @@
 		659F92BF20D3429B00D248A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659F92BD20D3429B00D248A0 /* LaunchScreen.storyboard */; };
 		659F92C720D3449800D248A0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659F92C620D3449800D248A0 /* MainViewController.swift */; };
 		659F92CA20D3468700D248A0 /* DishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659F92C920D3468700D248A0 /* DishViewController.swift */; };
+		65D4636120E86410008903BC /* burger.dae in Resources */ = {isa = PBXBuildFile; fileRef = 65D4636020E86410008903BC /* burger.dae */; };
+		65D4636320E86C4B008903BC /* pizza_TEXTURES in Resources */ = {isa = PBXBuildFile; fileRef = 65D4636220E86C4B008903BC /* pizza_TEXTURES */; };
+		65D4636520E86CB0008903BC /* pizza.dae in Resources */ = {isa = PBXBuildFile; fileRef = 65D4636420E86CAF008903BC /* pizza.dae */; };
 		65EB995F20DB3789006BB720 /* Mug_TEXTURES in Resources */ = {isa = PBXBuildFile; fileRef = 65EB995E20DB3789006BB720 /* Mug_TEXTURES */; };
 		65F4D94920D9D4BB008F5422 /* Cake.dae in Resources */ = {isa = PBXBuildFile; fileRef = 65F4D94820D9D4BB008F5422 /* Cake.dae */; };
 		65F4D94B20D9D4C4008F5422 /* Chocolate_Cake_TEXTURES in Resources */ = {isa = PBXBuildFile; fileRef = 65F4D94A20D9D4C4008F5422 /* Chocolate_Cake_TEXTURES */; };
 		65F4D94F20D9E2D0008F5422 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F4D94E20D9E2D0008F5422 /* Restaurant.swift */; };
 		65F4D95120D9E358008F5422 /* Dish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F4D95020D9E358008F5422 /* Dish.swift */; };
 		65F4D95320D9E3E8008F5422 /* ApiSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F4D95220D9E3E8008F5422 /* ApiSimulator.swift */; };
+		65FBB75A20E86281007BC8B7 /* Burger_TEXTURES in Resources */ = {isa = PBXBuildFile; fileRef = 65FBB75920E86281007BC8B7 /* Burger_TEXTURES */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,12 +45,16 @@
 		659F92C020D3429B00D248A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		659F92C620D3449800D248A0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		659F92C920D3468700D248A0 /* DishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishViewController.swift; sourceTree = "<group>"; };
+		65D4636020E86410008903BC /* burger.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = burger.dae; sourceTree = "<group>"; };
+		65D4636220E86C4B008903BC /* pizza_TEXTURES */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pizza_TEXTURES; sourceTree = "<group>"; };
+		65D4636420E86CAF008903BC /* pizza.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = pizza.dae; sourceTree = "<group>"; };
 		65EB995E20DB3789006BB720 /* Mug_TEXTURES */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Mug_TEXTURES; sourceTree = "<group>"; };
 		65F4D94820D9D4BB008F5422 /* Cake.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Cake.dae; sourceTree = "<group>"; };
 		65F4D94A20D9D4C4008F5422 /* Chocolate_Cake_TEXTURES */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Chocolate_Cake_TEXTURES; sourceTree = "<group>"; };
 		65F4D94E20D9E2D0008F5422 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		65F4D95020D9E358008F5422 /* Dish.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dish.swift; sourceTree = "<group>"; };
 		65F4D95220D9E3E8008F5422 /* ApiSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiSimulator.swift; sourceTree = "<group>"; };
+		65FBB75920E86281007BC8B7 /* Burger_TEXTURES */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Burger_TEXTURES; sourceTree = "<group>"; };
 		86BC142A377C0425F6180361 /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +134,10 @@
 		65F4D94720D9D499008F5422 /* 3dModels */ = {
 			isa = PBXGroup;
 			children = (
+				65D4636020E86410008903BC /* burger.dae */,
+				65D4636420E86CAF008903BC /* pizza.dae */,
+				65D4636220E86C4B008903BC /* pizza_TEXTURES */,
+				65FBB75920E86281007BC8B7 /* Burger_TEXTURES */,
 				6529357220DB38E6001FBA35 /* Banana_TEXTURES */,
 				65EB995E20DB3789006BB720 /* Mug_TEXTURES */,
 				65F4D94A20D9D4C4008F5422 /* Chocolate_Cake_TEXTURES */,
@@ -218,8 +230,12 @@
 				6529357320DB38E6001FBA35 /* Banana_TEXTURES in Resources */,
 				65F4D94920D9D4BB008F5422 /* Cake.dae in Resources */,
 				6529357120DB38D9001FBA35 /* Banana.dae in Resources */,
+				65FBB75A20E86281007BC8B7 /* Burger_TEXTURES in Resources */,
+				65D4636520E86CB0008903BC /* pizza.dae in Resources */,
 				659F92BF20D3429B00D248A0 /* LaunchScreen.storyboard in Resources */,
+				65D4636320E86C4B008903BC /* pizza_TEXTURES in Resources */,
 				65F4D94B20D9D4C4008F5422 /* Chocolate_Cake_TEXTURES in Resources */,
+				65D4636120E86410008903BC /* burger.dae in Resources */,
 				659F92BC20D3429B00D248A0 /* Assets.xcassets in Resources */,
 				659F92BA20D3429B00D248A0 /* Main.storyboard in Resources */,
 			);
